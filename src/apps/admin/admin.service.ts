@@ -83,23 +83,35 @@ export class AdminService {
     await this.prisma.user.deleteMany({});
   }
 
-  async publishArticle(slug: string) {
+  async publishArticle(id: number) {
     const article = await this.prisma.article.findUnique({
       where: {
-        slug,
+        id,
       },
     });
     if (!article) {
       throw new NotFoundException('چنین مقاله ای وجود ندارد');
     }
-    await this.prisma.article.update({
-      where: {
-        slug,
-      },
-      data: {
-        published: true,
-      },
-    });
+    if (article.published == true) {
+      await this.prisma.article.update({
+        where: {
+          id,
+        },
+        data: {
+          published: false,
+        },
+      });
+    } else {
+      await this.prisma.article.update({
+        where: {
+          id,
+        },
+        data: {
+          published: true,
+        },
+      });
+    }
+    return article.published;
   }
 
   async publishArticles() {
@@ -110,25 +122,6 @@ export class AdminService {
     await this.prisma.article.updateMany({
       data: {
         published: true,
-      },
-    });
-  }
-
-  async unpublishArticle(slug: string) {
-    const article = await this.prisma.article.findUnique({
-      where: {
-        slug,
-      },
-    });
-    if (!article) {
-      throw new NotFoundException('چنین مقاله ای وجود ندارد');
-    }
-    await this.prisma.article.update({
-      where: {
-        slug,
-      },
-      data: {
-        published: false,
       },
     });
   }

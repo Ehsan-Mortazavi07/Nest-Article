@@ -26,7 +26,7 @@ export class ArticleService {
 
     const category = await this.prisma.category.findUnique({
       where: {
-        title: createArticleDto.category,
+        slug: createArticleDto.category,
       },
     });
 
@@ -84,7 +84,7 @@ export class ArticleService {
     } else if (article.authorId !== req.user.id || req.user.role !== 'ADMIN') {
       throw new ForbiddenException();
     }
-    console.log(article.authorId);
+
     const checkSlugArticle = await this.prisma.article.findUnique({
       where: {
         slug: editArticleDto.slug,
@@ -97,6 +97,16 @@ export class ArticleService {
       );
     }
 
+    const category = await this.prisma.category.findUnique({
+      where: {
+        slug: editArticleDto.category,
+      },
+    });
+
+    if (!category) {
+      throw new NotFoundException('چنین کتگوری با این مشخصات وجود ندارد');
+    }
+
     await this.prisma.article.update({
       where: {
         id: id,
@@ -107,6 +117,7 @@ export class ArticleService {
         video: editArticleDto.video,
         picture: editArticleDto.picture,
         slug: editArticleDto.slug,
+        categoryId: category.id,
       },
     });
 

@@ -27,8 +27,8 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   articles  Article[]
-  comments   Comment[]
-  Likes      Like[]
+  comments  Comment[]
+  Likes     Like[]
 }
 
 model Article {
@@ -38,10 +38,10 @@ model Article {
   picture     String?
   video       String?
   slug        String    @unique
-  comments     Comment[]
+  comments    Comment[]
   // view
-  Likes        Like[]
-  category  Category  @relation(fields: [categoryId], references: [id])
+  Likes       Like[]
+  category    Category  @relation(fields: [categoryId], references: [id])
   categoryId  Int
   author      User      @relation(fields: [authorId], references: [id])
   authorId    Int
@@ -65,13 +65,15 @@ model Comment {
 }
 
 model Category {
-  id       Int        @id @default(autoincrement())
-  title     String     @unique
-  slug     String     @unique
+  id        Int        @id @default(autoincrement())
+  title     String
+  slug      String     @unique
   articles  Article[]
-  parentId Int?
-  parent   Category?  @relation("CatgoryChildren", fields: [parentId], references: [id])
-  children Category[] @relation("CatgoryChildren")
+  parentId  Int? 
+  parent    Category?  @relation("CatgoryChildren", fields: [parentId], references: [id])
+  children  Category[] @relation("CatgoryChildren")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Like {

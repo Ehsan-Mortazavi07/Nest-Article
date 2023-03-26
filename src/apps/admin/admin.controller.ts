@@ -18,7 +18,7 @@ export class AdminController {
     };
   }
 
-  @Delete('categories/delete')
+  @Delete('category/delete')
   async deleteCategories() {
     await this.adminService.deleteCategories();
     return {
@@ -34,7 +34,7 @@ export class AdminController {
     };
   }
 
-  @Delete('articles/delete')
+  @Delete('article/delete')
   async deleteArticles() {
     await this.adminService.deleteArticles();
     return {
@@ -50,7 +50,7 @@ export class AdminController {
     };
   }
 
-  @Delete('users/delete')
+  @Delete('user/delete')
   async deleteUsers() {
     await this.adminService.deleteUsers();
     return {
@@ -58,26 +58,19 @@ export class AdminController {
     };
   }
 
-  @Post('article/publish/:slug')
-  async publishArticle(@Param('slug') slug: string) {
-    await this.adminService.publishArticle(slug);
-    return { message: 'مقاله منتشر شد' };
+  @Post('article/publish/:id')
+  async publishArticle(@Param('id') id: string) {
+    await this.adminService.publishArticle(parseInt(id as string));
+    return { message: 'عملیات با موفقیت انجام شد' };
   }
 
-  @Post('articles/publish')
+  @Post('article/publish')
   async publishArticles() {
     await this.adminService.publishArticles();
     return { message: 'مقاله ها منتشر شدند' };
   }
 
-  @Post('article/unpublish/:slug')
-  async unpublishArticle(@Param('slug') slug: string) {
-    await this.adminService.unpublishArticle(slug);
-
-    return { message: 'مقاله  با موفقیت غیر فعال شد' };
-  }
-
-  @Post('articles/unpublish')
+  @Post('article/unpublish')
   async unpublishArticles() {
     await this.adminService.unpublishArticles();
 
