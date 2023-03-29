@@ -22,10 +22,10 @@ export class AdminService {
   }
 
   async deleteCategories() {
-    const categories = await this.prisma.user.findMany({});
+    const categories = await this.prisma.category.findMany({});
 
     if (!categories) {
-      throw new NotFoundException('هیچ کتگوری ای وجود ندارد');
+      throw new NotFoundException('هیچ مقاله ای وجود ندارد');
     }
 
     await this.prisma.category.deleteMany({});

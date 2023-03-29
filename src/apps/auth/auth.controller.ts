@@ -5,9 +5,13 @@ import {
   UseGuards,
   Request,
   Get,
-  Req
+  Req,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common/exceptions';
 import { AuthGuard } from '@nestjs/passport';
+
 import { CreateUserDto } from '../user/dots/create-user.dto';
 import { AuthService } from './auth.service';
 import { ForgetPasswordDto } from './dtos/forget-password.dto';

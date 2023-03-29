@@ -14,7 +14,7 @@ export class AdminController {
   async deleteCategory(@Param('id') id: string) {
     await this.adminService.deleteCategory(parseInt(id as string));
     return {
-      message: 'کابر با موفقیت حذف شد',
+      message: 'گتگوری با موفقیت حذف شد',
     };
   }
 
@@ -22,7 +22,7 @@ export class AdminController {
   async deleteCategories() {
     await this.adminService.deleteCategories();
     return {
-      message: 'کابر ها با موفقیت حذف شدند ',
+      message: 'گتگوری ها با موفقیت حذف شدند ',
     };
   }
 

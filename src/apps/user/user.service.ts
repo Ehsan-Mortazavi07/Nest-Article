@@ -49,7 +49,11 @@ export class UserService {
     return newUser;
   }
 
-  async editUserProfile(@Request() req, editUserDto: EditUserDto) {
+  async editUserProfile(
+    @Request() req,
+    editUserDto: EditUserDto,
+    image: Express.Multer.File,
+  ) {
     let user = await this.prisma.user.findUnique({
       where: {
         email: req.user.email,
@@ -81,7 +85,7 @@ export class UserService {
       data: {
         fullname: editUserDto.fullname,
         email: editUserDto.email.toLocaleLowerCase(),
-        image: editUserDto.image,
+        image: image.path,
         password,
       },
     });
@@ -94,5 +98,4 @@ export class UserService {
 
     return user;
   }
-
 }

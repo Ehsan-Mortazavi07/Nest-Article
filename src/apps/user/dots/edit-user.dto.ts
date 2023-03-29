@@ -7,8 +7,6 @@ export class EditUserDto {
   @IsEmail()
   email: string;
 
-  @IsString()
-  image: string;
 
   @IsString()
   @Length(5, 999, { message: 'پسورد حداقل باید 5 کاراکتر باشد' })
