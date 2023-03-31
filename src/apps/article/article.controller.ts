@@ -31,7 +31,7 @@ export class ArticleController {
     return { article };
   }
 
-  @Get('/show-all')
+  @Get('/all')
   async showAll() {
     const articles = await this.articleService.showAll();
     return articles;

@@ -40,7 +40,6 @@ model Article {
   slug        String    @unique
   comments    Comment[]
   // view
-  Likes       Like[]
   category    Category  @relation(fields: [categoryId], references: [id])
   categoryId  Int
   author      User      @relation(fields: [authorId], references: [id])
@@ -48,6 +47,7 @@ model Article {
   published   Boolean   @default(false)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  Likes       Like[]
 }
 
 model Comment {
@@ -77,11 +77,12 @@ model Category {
 }
 
 model Like {
-  id        Int     @id @default(autoincrement())
-  user      User    @relation(fields: [userId], references: [id])
-  userId    Int
-  Article   Article @relation(fields: [articleId], references: [id])
-  articleId Int
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  Article   Article? @relation(fields: [articleId], references: [id])
+  articleId Int?
 }
 
 model ActivationCode {

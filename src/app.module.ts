@@ -13,7 +13,7 @@ import { LikeModule } from './apps/like/like.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '../public'),
+      rootPath: join(__dirname, '..', '../uploads'),
     }),
     UserModule,
     AuthModule,
