@@ -48,12 +48,25 @@ export class ArticleService {
     return newArticle;
   }
 
-  async showAll() {
-    const articles = await this.prisma.article.findMany();
+  async showAll(@Req() req) {
+    const page = req.query.page || 1;
+    const perPage = req.query.limit || 10;
+    const totalItems: any = await this.prisma.article.findMany();
+    const totalPages = Math.ceil(totalItems / perPage);
+
+    const articles = await this.prisma.article.findMany({
+      orderBy: {
+        updatedAt: 'asc',
+      },
+      skip: (page - 1) * perPage,
+      take: perPage,
+    });
+
     if (!articles) {
       throw new NotFoundException('هیچ مقاله ای وجود ندارد');
     }
-    return articles;
+
+    return { articles, totalPages, totalItems };
   }
 
   async showOne(slug: string) {

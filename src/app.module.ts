@@ -9,6 +9,7 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LikeModule } from './apps/like/like.module';
+import { CommentModule } from './apps/comment/comment.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { LikeModule } from './apps/like/like.module';
     AdminModule,
     CategoryModule,
     LikeModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -32,8 +33,8 @@ export class ArticleController {
   }
 
   @Get('/all')
-  async showAll() {
-    const articles = await this.articleService.showAll();
+  async showAll(@Query() page) {
+    const articles = await this.articleService.showAll(page);
     return articles;
   }
 
