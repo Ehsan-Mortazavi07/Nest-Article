@@ -48,17 +48,17 @@ export class ArticleService {
     return newArticle;
   }
 
-  async showAll(@Req() req) {
-    const page = req.query.page || 1;
-    const perPage = req.query.limit || 10;
-    const totalItems: any = await this.prisma.article.findMany();
+  async showAll(page: string, limit: string) {
+    const pageQuery = parseInt(page) || 1;
+    const perPage = parseInt(limit) || 10;
+    const totalItems: any = (await this.prisma.article.findMany()).length;
     const totalPages = Math.ceil(totalItems / perPage);
 
     const articles = await this.prisma.article.findMany({
       orderBy: {
-        updatedAt: 'asc',
+        updatedAt: 'desc',
       },
-      skip: (page - 1) * perPage,
+      skip: (pageQuery - 1) * perPage, 
       take: perPage,
     });
 
