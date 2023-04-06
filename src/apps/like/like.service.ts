@@ -3,21 +3,19 @@ import {
   Injectable,
   NotFoundException,
   Req,
-  UseGuards,
 } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateLikeDto } from './dtos/create-like.dto';
 
 @Injectable()
-@UseGuards(JwtAuthGuard)
+
 export class LikeService {
   constructor(private readonly prisma: PrismaService) {}
 
   async isLike(@Req() req, @Body() createLikeDto: CreateLikeDto) {
     const article = await this.prisma.article.findUnique({
       where: {
-        id: createLikeDto.article,
+        id: parseInt(createLikeDto.article),
       },
     });
 
@@ -42,7 +40,7 @@ export class LikeService {
       await this.prisma.like.create({
         data: {
           userId: req.user.id,
-          articleId: article.id,
+          articleId:article.id,
         },
       });
     }
