@@ -11,7 +11,6 @@ import { AppService } from './app.service';
 import { LikeModule } from './apps/like/like.module';
 import { CommentModule } from './apps/comment/comment.module';
 import { PrismaModule } from 'prisma/prisma.module';
-import { HomeModule } from './home/home.module';
 
 @Module({
   imports: [
@@ -26,7 +25,6 @@ import { HomeModule } from './home/home.module';
     LikeModule,
     CommentModule,
     PrismaModule,
-    HomeModule
   ],
   controllers: [AppController],
   providers: [AppService],
