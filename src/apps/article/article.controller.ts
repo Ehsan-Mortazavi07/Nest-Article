@@ -36,10 +36,10 @@ export class ArticleController {
     const articles = await this.articleService.showAll(page, limit);
     return articles;
   }
-
+  @UseGuards(JwtAuthGuard)
   @Get(':slug')
-  async showOne(@Param('slug') slug: string) {
-    const article = await this.articleService.showOne(slug);
+  async showOne(@Param('slug') slug: string, @Req() req) {
+    const { article } = await this.articleService.showOne(slug, req);
     return article;
   }
 

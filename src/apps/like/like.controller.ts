@@ -10,7 +10,7 @@ export class LikeController {
 
   @Post('')
   async createLike(@Req() req, @Body() createLikeDto: CreateLikeDto) {
-    const like = await this.likeService.isLike(req, createLikeDto);
+    const { like } = await this.likeService.isLike(req, createLikeDto);
     return { like };
   }
 }

@@ -1,14 +1,8 @@
-import {
-  Body,
-  Injectable,
-  NotFoundException,
-  Req,
-} from '@nestjs/common';
+import { Body, Injectable, NotFoundException, Req } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 import { CreateLikeDto } from './dtos/create-like.dto';
 
 @Injectable()
-
 export class LikeService {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -40,9 +34,10 @@ export class LikeService {
       await this.prisma.like.create({
         data: {
           userId: req.user.id,
-          articleId:article.id,
+          articleId: article.id,
         },
       });
     }
+    return { like };
   }
 }

@@ -17,37 +17,39 @@ enum Role {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  fullname  String?   @default("EhsanMortazavi")
-  image     String?   @default("default.png")
-  email     String    @unique
+  id        Int        @id @default(autoincrement())
+  fullname  String?    @default("EhsanMortazavi")
+  image     String?    @default("default.png")
+  email     String     @unique
   password  String
-  token     String?   @unique
-  role      Role      @default(USER)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  token     String?    @unique
+  role      Role       @default(USER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   articles  Article[]
   comments  Comment[]
   Likes     Like[]
+  Bookmark  Bookmark[]
 }
 
 model Article {
-  id          Int       @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
   description String
   picture     String?
   video       String?
-  slug        String    @unique
+  slug        String     @unique
   comments    Comment[]
   // view
-  category    Category  @relation(fields: [categoryId], references: [id])
+  category    Category   @relation(fields: [categoryId], references: [id])
   categoryId  Int
-  author      User      @relation(fields: [authorId], references: [id])
+  author      User       @relation(fields: [authorId], references: [id])
   authorId    Int
-  published   Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  published   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   Likes       Like[]
+  Bookmark    Bookmark[]
 }
 
 model Comment {
@@ -77,6 +79,15 @@ model Category {
 }
 
 model Like {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  Article   Article? @relation(fields: [articleId], references: [id])
+  articleId Int?
+}
+
+model Bookmark {
   id     Int  @id @default(autoincrement())
   user   User @relation(fields: [userId], references: [id])
   userId Int

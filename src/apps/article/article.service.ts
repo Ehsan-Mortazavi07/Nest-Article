@@ -58,7 +58,7 @@ export class ArticleService {
       orderBy: {
         updatedAt: 'desc',
       },
-      skip: (pageQuery - 1) * perPage, 
+      skip: (pageQuery - 1) * perPage,
       take: perPage,
     });
 
@@ -69,16 +69,33 @@ export class ArticleService {
     return { articles, totalPages, totalItems };
   }
 
-  async showOne(slug: string) {
-    const article = await this.prisma.article.findUnique({
+  async showOne(slug: string, @Req() req) {
+    const foundArticle = await this.prisma.article.findUnique({
       where: {
         slug,
       },
     });
+    let article: any = { ...foundArticle };
+    article.isLiked = false;
+    if (req.user) {
+      const like = await this.prisma.like.findMany({
+        where: {
+          articleId: foundArticle.id,
+          userId: req.user.id,
+        },
+      });
+
+      
+      if (like && like.length > 0) {
+        article.isLiked = true;
+      } else {
+        article.isLiked = false;
+      }
+    }
     if (!article) {
       throw new NotFoundException('چنین مقاله ای وجود ندارد');
     }
-    return article;
+    return { article };
   }
 
   async editArticle(
