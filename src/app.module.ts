@@ -11,7 +11,6 @@ import { AppService } from './app.service';
 import { LikeModule } from './apps/like/like.module';
 import { CommentModule } from './apps/comment/comment.module';
 import { PrismaModule } from 'prisma/prisma.module';
-import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -26,7 +25,6 @@ import { UsersModule } from './users/users.module';
     LikeModule,
     CommentModule,
     PrismaModule,
-    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
